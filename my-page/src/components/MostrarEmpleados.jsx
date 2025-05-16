@@ -4,47 +4,55 @@ import '../style/General.css';
 
 const MostrarEmpleados = () => {
   const [empleados, setEmpleados] = useState([]);
+  const [busqueda, setBusqueda] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  // Aquí puedes simular una llamada a una API o usar fetch en producción
+  const fetchEmpleados = async (nombre = '') => {
+    try {
+      setLoading(true);
+      const url = nombre
+        ? `http://localhost:8000/MostrarEmpleados/?nombre=${encodeURIComponent(nombre)}`
+        : `http://localhost:8000/MostrarEmpleados/`;
+
+      const response = await fetch(url);
+      const data = await response.json();
+      setEmpleados(data);
+    } catch (error) {
+      console.error('Error al obtener empleados:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const empleadosEjemplo = [
-      {
-        id: 1,
-        nombre: "Laura",
-        apellidos: "Martínez",
-        salarioBasico: 4500000,
-        fechaContratacion: "2021-03-15",
-        tipoContrato: "Indefinido",
-        proyectos: [
-          {
-            nombreProyecto: "Sistema de Nómina",
-            inicioContrato: "2021-03-15",
-            finContrato: "2022-06-01",
-            fechaInicio: "2021-03-01",
-            fechaFin: "2022-12-31",
-            estadoProyecto: "Finalizado"
-          }
-        ]
-      },
-      {
-        id: 2,
-        nombre: "Carlos",
-        apellidos: "Ruiz",
-        salarioBasico: 3800000,
-        fechaContratacion: "2020-10-10",
-        tipoContrato: "Temporal",
-        proyectos: []
-      }
-    ];
-    setEmpleados(empleadosEjemplo);
+    fetchEmpleados(); // Cargar todos al inicio
   }, []);
+
+  const handleBuscar = () => {
+    fetchEmpleados(busqueda);
+  };
 
   return (
     <div className="mostrar-empleados">
       <h1>Lista de Empleados</h1>
-      {empleados.map(emp => (
-        <EmployeeCard key={emp.id} employee={emp} />
-      ))}
+
+      <div className="busqueda">
+        <input
+          type="text"
+          placeholder="Buscar por nombre..."
+          value={busqueda}
+          onChange={(e) => setBusqueda(e.target.value)}
+        />
+        <button onClick={handleBuscar}>Buscar</button>
+      </div>
+
+      {loading ? (
+        <p>Cargando empleados...</p>
+      ) : (
+        empleados.map(emp => (
+          <EmployeeCard key={emp.id} employee={emp} />
+        ))
+      )}
     </div>
   );
 };

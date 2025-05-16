@@ -1,0 +1,64 @@
+.vw-nomina-container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 0 15px;
+}
+
+.vw-nomina-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.input-buscar {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 20px auto;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+}
+
+.input-buscar:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.nomina-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fdfdfd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.nomina-table th,
+.nomina-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.nomina-table th {
+  background-color: #f1f1f1;
+  font-weight: 600;
+}
+
+.nomina-table tr:hover {
+  background-color: #f0f8ff;
+}
+
+.nomina-table td:last-child {
+  font-weight: 700;
+  color: #007bff;
+}
+
+.loader-text {
+  text-align: center;
+  color: #555;
+  margin-bottom: 10px;
+  font-style: italic;
+}

@@ -5,12 +5,31 @@ export default function EliminarEmpleadoForm() {
   const [nombre, setNombre] = useState("");
   const [apellidos, setApellidos] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Empleado a eliminar:", { nombre, apellidos });
-    alert(`Empleado ${nombre} ${apellidos} eliminado.`);
-    setNombre("");
-    setApellidos("");
+
+    try {
+      const response = await fetch("http://localhost:8000/Eliminar/eliminar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nombre, apellidos }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || "Error al eliminar empleado");
+      }
+
+      const result = await response.json();
+      alert(result.mensaje);
+      setNombre("");
+      setApellidos("");
+    } catch (error) {
+      alert("Error: " + error.message);
+      console.error("Error:", error);
+    }
   };
 
   return (

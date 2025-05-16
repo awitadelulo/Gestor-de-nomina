@@ -1,4 +1,3 @@
-// NuevoEmpleado.jsx
 import React, { useState } from 'react';
 import '../style/AgregarUsuario.css';
 
@@ -23,7 +22,50 @@ const NuevoEmpleado = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Datos enviados:', form);
-    // Aquí puedes hacer la petición POST al backend
+
+    fetch('http://localhost:8000/CrearEmpleado/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        nombre: form.nombre,
+        apellidos: form.apellidos,
+        salario: parseFloat(form.salario),
+        tipoContrato: parseInt(form.tipoContrato),
+        fechaContratacion: form.fechaContratacion,
+        proyecto: parseInt(form.proyecto),
+        tipoContratoProyecto: parseInt(form.tipoContratoProyecto),
+        inicioContrato: form.inicioContrato,
+        finContrato: form.finContrato
+      })
+    })
+      .then(res => {
+        if (!res.ok) {
+          return res.text().then(text => {
+            throw new Error(`Error del servidor: ${text}`);
+          });
+        }
+        return res.json();
+      })
+      .then(data => {
+        alert(data.mensaje);
+        setForm({
+          nombre: '',
+          apellidos: '',
+          salario: '',
+          tipoContrato: '',
+          fechaContratacion: '',
+          proyecto: '',
+          tipoContratoProyecto: '',
+          inicioContrato: '',
+          finContrato: ''
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Ocurrió un error al crear el empleado.");
+      });
   };
 
   return (

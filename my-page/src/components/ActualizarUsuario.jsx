@@ -1,4 +1,3 @@
-// NuevoEmpleado.jsx
 import React, { useState } from 'react';
 import '../style/AgregarUsuario.css';
 
@@ -20,10 +19,49 @@ const ActualizarEmpleado = () => {
     setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Datos enviados:', form);
-    // Aquí puedes hacer la petición POST al backend
+
+    try {
+      const response = await fetch('http://localhost:8000/ActualizarEmpleado/', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nombre: form.nombre,
+          apellidos: form.apellidos,
+          salario: parseFloat(form.salario),
+          tipoContrato: parseInt(form.tipoContrato),
+          fechaContratacion: form.fechaContratacion
+          // Si quieres agregar más campos, agrégalos aquí y también actualiza FastAPI
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Error al actualizar empleado');
+      }
+
+      const result = await response.json();
+      alert(result.mensaje);
+
+      // Limpiar formulario
+      setForm({
+        nombre: '',
+        apellidos: '',
+        salario: '',
+        tipoContrato: '',
+        fechaContratacion: '',
+        proyecto: '',
+        tipoContratoProyecto: '',
+        inicioContrato: '',
+        finContrato: ''
+      });
+    } catch (error) {
+      console.error('Error:', error.message);
+      alert('Error: ' + error.message);
+    }
   };
 
   return (
@@ -73,7 +111,7 @@ const ActualizarEmpleado = () => {
         <label>Fin de Contrato:</label>
         <input type="date" name="finContrato" value={form.finContrato} onChange={handleChange} required />
 
-        <button type="submit">Registrar Empleado</button>
+        <button type="submit">Actualizar Empleado</button>
       </form>
     </div>
   );

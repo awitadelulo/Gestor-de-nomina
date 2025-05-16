@@ -14,15 +14,15 @@ const EmployeeCard = ({ employee }) => {
           </tr>
           <tr>
             <th>Salario Básico</th>
-            <td>${employee.salarioBasico.toFixed(2)}</td>
+            <td>${employee.salariobasico.toFixed(2)}</td>
           </tr>
           <tr>
             <th>Fecha de Contratación</th>
-            <td>{employee.fechaContratacion}</td>
+            <td>{employee.fechacontratacion}</td>
           </tr>
           <tr>
             <th>Tipo de Contrato</th>
-            <td>{employee.tipoContrato}</td>
+            <td>{employee.tipocontrato}</td>
           </tr>
         </tbody>
       </table>
@@ -44,12 +44,12 @@ const EmployeeCard = ({ employee }) => {
             <tbody>
               {employee.proyectos.map((proyecto, idx) => (
                 <tr key={idx}>
-                  <td>{proyecto.nombreProyecto}</td>
-                  <td>{proyecto.inicioContrato}</td>
-                  <td>{proyecto.finContrato}</td>
-                  <td>{proyecto.fechaInicio}</td>
-                  <td>{proyecto.fechaFin}</td>
-                  <td>{proyecto.estadoProyecto}</td>
+                  <td>{proyecto.nombreproyecto}</td>
+                  <td>{proyecto.iniciocontrato}</td>
+                  <td>{proyecto.fincontrato}</td>
+                  <td>{proyecto.fechainicio}</td>
+                  <td>{proyecto.fechafin}</td>
+                  <td>{proyecto.estadoproyecto}</td>
                 </tr>
               ))}
             </tbody>

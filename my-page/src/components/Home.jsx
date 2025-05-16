@@ -28,6 +28,8 @@ const Home = () => {
         </div>
 
         <button className="home-button" onClick={() => navigate('/MostrarEmpleados')}>Administrar Empleados</button>
+        <button className="home-button" onClick={() => navigate('/MostrarProyectosActivos')} >Proyectos Activos</button>
+        <button className="home-button" onClick={() => navigate('/VwNomina')} >Detalle Nomina Empleados</button> 
         <button className="home-button">Nomina Empleados</button>
         <button className="home-button">Liquidación Empleados</button>
       </div>
